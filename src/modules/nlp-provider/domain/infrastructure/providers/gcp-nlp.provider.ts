@@ -19,14 +19,6 @@ export class GCPNLPProvider implements NLPProvider {
     });
     const sentiment = result.documentSentiment;
 
-    if (!sentiment) {
-      return {
-        message: text,
-        createdAt: new Date(),
-        sentimentScore: 0,
-        sentimentMagnitude: 0,
-      };
-    }
     return {
       message: text,
       createdAt: new Date(),
