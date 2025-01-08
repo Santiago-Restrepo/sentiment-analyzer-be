@@ -8,8 +8,9 @@ export class AnalizerController {
     private readonly analyzeSentimentService: AnalizeSentimentService,
   ) {}
 
-  @Post('/sentiment')
+  @Post()
   async analyzeSentiment(@Body() analyzeSentimentDto: AnalyzeSentimentDto) {
+    console.log('analysing');
     return this.analyzeSentimentService.analyzeSentiment(
       analyzeSentimentDto.message,
     );

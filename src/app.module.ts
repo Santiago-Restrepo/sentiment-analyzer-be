@@ -5,6 +5,9 @@ import { SentimentAnalysisResultModule } from './modules/sentiment-analysis-resu
 import configModule from './modules/config/configuration.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { PersistenceModule } from './modules/persistence/persistence.module';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import LoggingInterceptor from './common/logging.interceptor';
+import { LoggingModule } from './modules/logging/logging.module';
 
 @Module({
   imports: [
@@ -14,7 +17,13 @@ import { PersistenceModule } from './modules/persistence/persistence.module';
     SentimentAnalysisResultModule,
     PersistenceModule,
     EventEmitterModule.forRoot(),
+    LoggingModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggingInterceptor,
+    },
+  ],
 })
 export class AppModule {}

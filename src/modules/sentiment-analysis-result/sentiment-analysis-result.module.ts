@@ -7,6 +7,7 @@ import {
 } from './infrastructure/schemas/sentiment-analysis.schema';
 import { ResultService } from './application/services/result.service';
 import { ResultController } from './infrastructure/controllers/result.controller';
+import { LoggingModule } from '../logging/logging.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ResultController } from './infrastructure/controllers/result.controller
         schema: SentimentAnalysisSchema,
       },
     ]),
+    LoggingModule,
   ],
   providers: [
     ResultService,
