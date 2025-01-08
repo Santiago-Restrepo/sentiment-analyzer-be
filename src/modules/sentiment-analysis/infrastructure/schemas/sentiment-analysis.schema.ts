@@ -8,7 +8,7 @@ export class SentimentAnalysisOrmEntity extends Document {
   @Prop({
     required: true,
   })
-  message: string;
+  text: string;
 
   @Prop({
     required: true,

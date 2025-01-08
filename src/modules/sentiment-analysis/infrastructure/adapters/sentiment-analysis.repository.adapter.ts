@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { SentimentAnalysisOrmEntity } from '@app/modules/sentiment-analysis-result/infrastructure/schemas/sentiment-analysis.schema';
 import { SentimentAnalysisResultMapper } from '../mapppers/sentiment-analysis.mapper';
-import { SentimentAnalysis } from '../../domain/entities/sentiment-analysis.entity';
 import { SentimentAnalysisRepository } from '../../domain/ports/sentiment-analysis.repository';
+import { SentimentAnalysis } from '../../domain/entities/sentiment-analysis.entity';
+import { SentimentAnalysisOrmEntity } from '../schemas/sentiment-analysis.schema';
 
 @Injectable()
 export class SentimentAnalysisRepositoryAdapter
@@ -23,12 +23,6 @@ export class SentimentAnalysisRepositoryAdapter
     );
     const createdDocument = await createdSentiment.save();
     return SentimentAnalysisResultMapper.toDomain(createdDocument);
-  }
-
-  async findById(id: string): Promise<SentimentAnalysis | null> {
-    const document = await this.sentimentAnalysisModel.findById(id).exec();
-    if (!document) return null;
-    return SentimentAnalysisResultMapper.toDomain(document);
   }
 
   async findAll(): Promise<SentimentAnalysis[]> {

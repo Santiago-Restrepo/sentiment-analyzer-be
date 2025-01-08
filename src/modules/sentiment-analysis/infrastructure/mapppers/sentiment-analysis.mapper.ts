@@ -5,11 +5,9 @@ export class SentimentAnalysisResultMapper {
   static toDomain(ormEntity: SentimentAnalysisOrmEntity): SentimentAnalysis {
     return new SentimentAnalysis(
       ormEntity._id as string,
-      ormEntity.message,
+      ormEntity.text,
       ormEntity.sentimentScore,
       ormEntity.sentimentMagnitude,
-      // ormEntity.createdAt as unknown as Date,
-      new Date(),
     );
   }
 }

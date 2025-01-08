@@ -1,12 +1,12 @@
 import { Events } from '@app/shared/enums/events.enum';
 import { Inject, Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import { SentimentAnalysisRepository } from '@app/modules/sentiment-analysis-result/domain/ports/sentiment-analysis.repository';
-import { SentimentAnalysis } from '@app/modules/sentiment-analysis-result/domain/entities/sentiment-analysis.entity';
 import { LoggingService } from '@app/modules/logging/application/logging.service';
+import { SentimentAnalysis } from '../../domain/entities/sentiment-analysis.entity';
+import { SentimentAnalysisRepository } from '../../domain/ports/sentiment-analysis.repository';
 
 @Injectable()
-export class ResultService {
+export class SentimentAnalysisResultService {
   constructor(
     @Inject('SentimentAnalysisRepository')
     private readonly sentimentAnalysisRepository: SentimentAnalysisRepository,
