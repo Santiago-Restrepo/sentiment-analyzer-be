@@ -4,7 +4,10 @@ export interface ServerConfig {
 
 export interface DatabaseConfig {
   mongodb: {
-    uri: string;
+    host: string;
+    port: number;
+    initdbRootUsername: string;
+    initdbRootPassword: string;
   };
 }
 
@@ -20,7 +23,10 @@ export default (): Config => {
     },
     database: {
       mongodb: {
-        uri: process.env.MONGODB_URI as string,
+        host: process.env.MONGO_HOST as string,
+        port: (process.env.MONGO_PORT || 27017) as number,
+        initdbRootUsername: process.env.MONGO_INITDB_ROOT_USERNAME as string,
+        initdbRootPassword: process.env.MONGO_INITDB_ROOT_PASSWORD as string,
       },
     },
   };

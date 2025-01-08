@@ -10,5 +10,17 @@ export class ValidateEnvDto {
 
   @IsString()
   @IsNotEmpty()
-  MONGODB_URI: string;
+  MONGO_HOST: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  MONGO_PORT: number;
+
+  @IsString()
+  @IsNotEmpty()
+  MONGO_INITDB_ROOT_USERNAME: string;
+
+  @IsString()
+  @IsNotEmpty()
+  MONGO_INITDB_ROOT_PASSWORD: string;
 }
