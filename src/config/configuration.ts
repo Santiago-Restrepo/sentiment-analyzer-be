@@ -15,7 +15,6 @@ export interface DatabaseConfig {
 export interface Config {
   server: ServerConfig;
   database: DatabaseConfig;
-  test_database: DatabaseConfig;
 }
 
 export default (): Config => {
@@ -30,16 +29,6 @@ export default (): Config => {
         port: (process.env.MONGO_PORT || 27017) as number,
         initdbRootUsername: process.env.MONGO_INITDB_ROOT_USERNAME as string,
         initdbRootPassword: process.env.MONGO_INITDB_ROOT_PASSWORD as string,
-      },
-    },
-    test_database: {
-      mongodb: {
-        host: process.env.MONGO_TEST_HOST as string,
-        port: (process.env.MONGO_TEST_PORT || 27017) as number,
-        initdbRootUsername: process.env
-          .MONGO_TEST_INITDB_ROOT_USERNAME as string,
-        initdbRootPassword: process.env
-          .MONGO_TEST_INITDB_ROOT_PASSWORD as string,
       },
     },
   };
