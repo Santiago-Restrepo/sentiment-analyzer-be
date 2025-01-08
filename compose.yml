@@ -12,6 +12,7 @@ services:
       - .env
     depends_on:
       - mongodb
+      - mongodb_test
     volumes:
       - .:/usr/src/app
 
@@ -26,5 +27,17 @@ services:
     volumes:
       - mongo-data:/data/db
 
+  mongodb_test:
+    image: mongo:latest
+    container_name: local-mongo-test
+    ports:
+      - '${MONGO_TEST_PORT}:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_TEST_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_TEST_INITDB_ROOT_PASSWORD}
+    volumes:
+      - mongo-data-test:/data/db
+
 volumes:
   mongo-data:
+  mongo-data-test:

@@ -1,6 +1,10 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class ValidateEnvDto {
+  @IsString()
+  @IsOptional()
+  NODE_ENV: string;
+
   @IsNumber()
   PORT: number;
 
@@ -23,4 +27,20 @@ export class ValidateEnvDto {
   @IsString()
   @IsNotEmpty()
   MONGO_INITDB_ROOT_PASSWORD: string;
+
+  @IsString()
+  @IsNotEmpty()
+  MONGO_TEST_HOST: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  MONGO_TEST_PORT: number;
+
+  @IsString()
+  @IsNotEmpty()
+  MONGO_TEST_INITDB_ROOT_USERNAME: string;
+
+  @IsString()
+  @IsNotEmpty()
+  MONGO_TEST_INITDB_ROOT_PASSWORD: string;
 }

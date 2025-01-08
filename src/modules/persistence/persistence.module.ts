@@ -1,13 +1,9 @@
 import configuration from '@app/config/configuration';
+import databaseUrl from '@app/config/database';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-const { host, port, initdbRootUsername, initdbRootPassword } =
-  configuration().database.mongodb;
+console.log(configuration());
 @Module({
-  imports: [
-    MongooseModule.forRoot(
-      `mongodb://${initdbRootUsername}:${initdbRootPassword}@${host}:${port}/database?authSource=admin`,
-    ),
-  ],
+  imports: [MongooseModule.forRoot(databaseUrl)],
 })
 export class PersistenceModule {}
