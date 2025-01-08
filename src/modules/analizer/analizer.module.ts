@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { AnalizeSentimentService } from './application/services/analize-sentiment.service';
-import { NlpProviderModule } from '../nlp-provider/nlp-provider.module';
-import { AnalizerController } from './infrastructure/analizer.controller';
+import { NlpProviderModule } from '@app/modules/nlp-provider/nlp-provider.module';
+import { AnalizeSentimentService } from '@app/modules/analizer/application/services/analize-sentiment.service';
+import { AnalizerController } from '@app/modules/analizer/infrastructure/analizer.controller';
 
 @Module({
   imports: [NlpProviderModule],

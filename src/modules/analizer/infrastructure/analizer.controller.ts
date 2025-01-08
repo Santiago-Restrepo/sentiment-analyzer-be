@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { AnalizeSentimentService } from '../application/services/analize-sentiment.service';
-import { AnalyzeSentimentDto } from '../application/dtos/analyze-sentiment.dto';
+import { AnalizeSentimentService } from '@app/modules/analizer/application/services/analize-sentiment.service';
+import { AnalyzeSentimentDto } from '@app/modules/analizer/application/dtos/analyze-sentiment.dto';
 
 @Controller('analyze')
 export class AnalizerController {
@@ -10,7 +10,7 @@ export class AnalizerController {
 
   @Post('/sentiment')
   async analyzeSentiment(@Body() analyzeSentimentDto: AnalyzeSentimentDto) {
-    return this.analyzeSentimentService.analyzeText(
+    return this.analyzeSentimentService.analyzeSentiment(
       analyzeSentimentDto.message,
     );
   }

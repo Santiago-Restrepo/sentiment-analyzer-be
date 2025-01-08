@@ -7,4 +7,8 @@ export class ValidateEnvDto {
   @IsString()
   @IsNotEmpty()
   GOOGLE_APPLICATION_CREDENTIALS: string;
+
+  @IsString()
+  @IsNotEmpty()
+  MONGODB_URI: string;
 }

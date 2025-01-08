@@ -1,5 +1,5 @@
-import { SentimentAnalysisResult } from '../../../analizer/domain/entities/sentiment-analysis-result.entity';
+import { SentimentAnalysis } from '@app/modules/sentiment-analysis-result/domain/entities/sentiment-analysis.entity';
 
 export interface NLPProvider {
-  analyzeSentiment(text: string): Promise<Omit<SentimentAnalysisResult, 'id'>>;
+  analyzeSentiment(text: string): Promise<Omit<SentimentAnalysis, 'id'>>;
 }

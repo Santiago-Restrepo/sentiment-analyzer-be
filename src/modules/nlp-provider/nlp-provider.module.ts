@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { GCPNLPProvider } from './domain/infrastructure/providers/gcp-nlp.provider';
+import { GCPNLPProvider } from '@modules/nlp-provider/domain/infrastructure/adapters/gcp-nlp.provider';
 
 @Module({
   providers: [

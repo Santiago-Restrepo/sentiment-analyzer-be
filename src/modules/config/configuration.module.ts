@@ -1,7 +1,7 @@
+import configuration from '@app/config/configuration';
+import { validateDto } from '@app/utils/validate-dto';
 import { ConfigModule } from '@nestjs/config';
-import configuration from 'src/config/configuration';
-import { validateDto } from 'src/utils/validate-dto';
-import { ValidateEnvDto } from './application/dtos/validate-env.dto';
+import { ValidateEnvDto } from '@modules/config/application/dtos/validate-env.dto';
 
 export default ConfigModule.forRoot({
   isGlobal: true,

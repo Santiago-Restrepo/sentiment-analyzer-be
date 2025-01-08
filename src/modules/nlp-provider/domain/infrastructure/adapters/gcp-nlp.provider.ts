@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { LanguageServiceClient } from '@google-cloud/language';
-import { NLPProvider } from '../../ports/nlp-provider.interface';
-import { SentimentAnalysisResult } from '@app/modules/analizer/domain/entities/sentiment-analysis-result.entity';
+import { NLPProvider } from '@modules/nlp-provider/domain/ports/nlp-provider.interface';
+import { SentimentAnalysis } from '@app/modules/sentiment-analysis-result/domain/entities/sentiment-analysis.entity';
 
 @Injectable()
 export class GCPNLPProvider implements NLPProvider {
@@ -11,9 +11,7 @@ export class GCPNLPProvider implements NLPProvider {
     this.client = new LanguageServiceClient();
   }
 
-  async analyzeSentiment(
-    text: string,
-  ): Promise<Omit<SentimentAnalysisResult, 'id'>> {
+  async analyzeSentiment(text: string): Promise<Omit<SentimentAnalysis, 'id'>> {
     const [result] = await this.client.analyzeSentiment({
       document: { content: text, type: 'PLAIN_TEXT' },
     });

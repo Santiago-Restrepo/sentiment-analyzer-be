@@ -1,4 +1,4 @@
-export class SentimentAnalysisResult {
+export class SentimentAnalysis {
   constructor(
     public readonly id: string,
     public readonly message: string,
