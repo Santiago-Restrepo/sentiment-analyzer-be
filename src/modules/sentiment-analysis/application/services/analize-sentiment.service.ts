@@ -18,7 +18,6 @@ export class AnalizeSentimentService {
   ): Promise<Omit<SentimentAnalysis, 'id' | 'text'>> {
     this.loggingService.log(`Analyze sentiment: ${text}`);
     const result = await this.nlpProvider.analyzeSentiment(text);
-    console.log(result);
     this.loggingService.log(`Analyzed sentiment: ${JSON.stringify(result)}`);
 
     this.loggingService.log(`Emit event: ${Events.SENTIMENT_ANALYZED}`);

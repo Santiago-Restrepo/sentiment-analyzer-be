@@ -21,6 +21,7 @@ export class SentimentAnalysisResultService {
     this.loggingService.log(`Saving result: ${JSON.stringify(data)}`);
     const result = await this.sentimentAnalysisRepository.create(data);
     this.loggingService.log(`Saved result: ${JSON.stringify(result)}`);
+    return result;
   }
 
   async findAllResults() {
