@@ -48,6 +48,7 @@ The application follows a hexagonal architecture, separating the core domain log
 
 ### Prerequisites
 
+- Node.js and npm or pnpm must be installed.
 - Docker and Docker Compose must be installed.
 - A Google Cloud service account JSON key needs to be generated and placed in the project root directory.
 
@@ -92,16 +93,28 @@ The application follows a hexagonal architecture, separating the core domain log
    MONGO_INITDB_ROOT_PASSWORD=example
    ```
 
-4. **Build Docker images**:
+4. **Install dependencies**:
 
    ```bash
-   docker-compose build
+   pnpm install
    ```
 
-5. **Start the application**:
+5. **Build the application**:
 
    ```bash
-   docker-compose up
+   pnpm build
+   ```
+
+6. **Build Docker images**:
+
+   ```bash
+   docker compose build
+   ```
+
+7. **Start the application**:
+
+   ```bash
+   docker compose up
    ```
 
    The API will be accessible on port 3010 by default (configurable via `.env`).
