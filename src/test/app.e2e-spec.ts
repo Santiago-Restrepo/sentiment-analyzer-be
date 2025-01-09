@@ -4,6 +4,7 @@ import { AppModule } from '../app.module';
 import { SentimentAnalysisRepository } from '../modules/sentiment-analysis/domain/ports/sentiment-analysis.repository';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AnalyzeSentimentDto } from '@app/modules/sentiment-analysis/application/dtos/analyze-sentiment.dto';
 
 describe('Sentiment Analysis E2E', () => {
   let app: any;
@@ -31,8 +32,8 @@ describe('Sentiment Analysis E2E', () => {
   });
 
   it('/POST sentiment-analysis (should create a sentiment analysis result)', async () => {
-    const sentimentAnalysisData = {
-      message: "I'm sad",
+    const sentimentAnalysisData: AnalyzeSentimentDto = {
+      text: "I'm sad",
     };
 
     // Use Supertest to make the POST request
@@ -52,7 +53,7 @@ describe('Sentiment Analysis E2E', () => {
 
     expect(savedResult).toHaveLength(1);
     expect(savedResult[0]).toHaveProperty('id');
-    expect(savedResult[0].text).toBe(sentimentAnalysisData.message);
+    expect(savedResult[0].text).toBe(sentimentAnalysisData.text);
     expect(savedResult[0].sentimentScore).toBe(response.body.sentimentScore);
     expect(savedResult[0].sentimentMagnitude).toBe(
       response.body.sentimentMagnitude,

@@ -10,5 +10,5 @@ export class AnalyzeSentimentDto {
     required: true,
     description: 'Message to analyze',
   })
-  message: string;
+  text: string;
 }
