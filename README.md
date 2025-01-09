@@ -1,99 +1,159 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Sentiment Analyzer - Backend API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Hey there! This project implements a sentiment analysis API using NestJS, a TypeScript framework, to analyze the sentiment of text. It utilizes the Google Cloud Natural Language API and stores the results in a MongoDB database.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+### Table of Contents
 
-## Description
+1. [Introduction](#introduction)
+2. [Architecture](#architecture)
+3. [Functionality](#functionality)
+   - [API Endpoints](#api-endpoints)
+4. [Running the Application](#running-the-application)
+   - [Prerequisites](#prerequisites)
+   - [Instructions](#instructions)
+5. [Swagger UI](#swagger-ui)
+6. [Logging](#logging)
+7. [Testing](#testing)
+8. [Additional Information](#additional-information)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Project setup
+## Architecture
+
+The application follows a hexagonal architecture, separating the core domain logic from the infrastructure and application layers. This promotes loose coupling and testability.
+
+- **Domain:** Contains pure TypeScript files defining entities and interfaces representing core domain concepts and their behaviors.
+- **Application:** Houses services and DTOs (Data Transfer Objects) responsible for application logic and data manipulation.
+- **Infrastructure:** Implements concrete logic for interacting with external systems like the Google Cloud Natural Language API and MongoDB. Includes controllers, mappers, and adapters (implementations of repositories).
+
+---
+
+## Functionality
+
+### API Endpoints
+
+1. **`/sentiment-analysis/analyze` (POST):**
+
+   - Accepts a JSON request body with a `text` field containing the message to be analyzed.
+   - Calls the Google Cloud Natural Language API to perform sentiment analysis.
+   - Emits an event to another service to store the analysis result.
+   - Returns a JSON response containing the sentiment score and magnitude.
+
+2. **`/sentiment-analysis/results` (GET):**
+   - Retrieves a list of all stored sentiment analysis results.
+
+---
+
+## Running the Application
+
+### Prerequisites
+
+- Docker and Docker Compose must be installed.
+- A Google Cloud service account JSON key needs to be generated and placed in the project root directory.
+
+### Instructions
+
+1. **Clone the repository**:
+
+   ```bash
+   git clone https://github.com/Santiago-Restrepo/sentiment-analyzer-be.git
+   ```
+
+2. **Generate a service account key**:  
+   Download the JSON file from Google Cloud Console and place it in the project root directory. An example file looks like this:
+
+   ```json
+   {
+     "type": "service_account",
+     "project_id": "your-project-id",
+     "private_key_id": "your-private-key-id",
+     "private_key": "-----BEGIN PRIVATE KEY-----\nYOUR_PRIVATE_KEY_CONTENTS\n-----END PRIVATE KEY-----",
+     "client_email": "your-client-email",
+     "client_id": "your-client-id",
+     "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+     "token_uri": "https://oauth2.googleapis.com/token",
+     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+     "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/your-client-email"
+   }
+   ```
+
+3. **Set up environment variables**:  
+   Create a `.env` file using `.env.example` as a template. Replace the values as needed:
+
+   ```env
+   # Application
+   PORT=3010
+   GOOGLE_APPLICATION_CREDENTIALS=/path/to/your/service-account-file.json
+
+   # Database
+   MONGO_HOST=mongodb
+   MONGO_PORT=27017
+   MONGO_INITDB_ROOT_USERNAME=root
+   MONGO_INITDB_ROOT_PASSWORD=example
+   ```
+
+4. **Build Docker images**:
+
+   ```bash
+   docker-compose build
+   ```
+
+5. **Start the application**:
+
+   ```bash
+   docker-compose up
+   ```
+
+   The API will be accessible on port 3010 by default (configurable via `.env`).
+
+---
+
+### Swagger UI
+
+The application includes a Swagger UI for testing API endpoints. Access it at `http://localhost:3010/api-docs` after running the application.
+
+---
+
+### Logging
+
+The application uses structured logging to capture key events, such as:
+
+- Incoming API requests and responses at infrastructure level.
+- Detailed logging for sentiment analysis service and sentiment analysis result service.
+- Errors or exceptions during processing.
+
+---
+
+## Testing
+
+### Prerequisites
+
+Install dependencies with your preferred package manager, such as `npm` or `pnpm`:
 
 ```bash
-$ pnpm install
+pnpm install
 ```
 
-## Compile and run the project
+### Unit Tests
+
+Run unit tests to verify individual components, in this project unit tests were implemented for the sentiment analysis service and the sentiment analysis result service:
 
 ```bash
-# development
-$ pnpm run start
-
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
+pnpm run test
 ```
 
-## Run tests
+### End-to-End Tests
+
+Run end-to-end tests to simulate user interactions with the API. This was implemented using Supertest and Jest to test the analyze endpoint and the results endpoint:
 
 ```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
+pnpm run test:e2e
 ```
 
-## Deployment
+---
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+## Additional Information
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+This README provides a basic overview of the project. For detailed implementation specifics, refer to the source code and tests.
 
-```bash
-$ pnpm install -g mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+**Note:** This project assumes a basic understanding of NestJS, Docker, and the hexagonal architecture.
