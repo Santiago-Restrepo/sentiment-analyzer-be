@@ -12,8 +12,6 @@ services:
       - .env
     depends_on:
       - mongodb
-    volumes:
-      - .:/usr/src/app
 
   mongodb:
     image: mongo:latest

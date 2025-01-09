@@ -1,17 +1,15 @@
-FROM node:18-alpine
-
-WORKDIR /usr/src/app
-
-COPY package*.json ./
-
+FROM node:18-alpine AS base
 RUN npm install -g pnpm
 
-RUN pnpm install
+FROM base AS installer
+WORKDIR /app
 
+COPY package*.json ./
+COPY pnpm-lock.yaml ./
 COPY . .
 
-RUN pnpm run build
+RUN pnpm install
+RUN pnpm build
 
 EXPOSE 3010
-
-CMD ["pnpm", "run", "start:prod"]
+CMD ["pnpm", "run", "start"]
